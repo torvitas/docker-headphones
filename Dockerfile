@@ -15,6 +15,8 @@ RUN apt-get -q update \
 
 USER headphones
 WORKDIR ["/headphones"]
+VOLUME ["/datadir", "/download"]
+EXPOSE 8181
 
 COPY run.sh /
 
