@@ -18,5 +18,6 @@ VOLUME ["/datadir", "/download"]
 EXPOSE 8181
 
 COPY run.sh /
+COPY headphones.ini /headphones/
 
 CMD ["/bin/bash", "/run.sh"]

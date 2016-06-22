@@ -14,7 +14,7 @@ echo "  User:       ${USER}"
 echo "  UID:        ${CP_UID:=666}"
 echo "  GID:        ${CP_GID:=666}"
 echo
-echo "  Config:     ${CONFIG:=/datadir/config.ini}"
+echo "  Config:     ${CONFIG:=/datadir/headphones.ini}"
 echo
 
 #
@@ -37,9 +37,16 @@ chown ${USER}: /datadir /media $(dirname ${CONFIG})
 echo "[DONE]"
 
 #
+# Make sure config file exists
+#
+CONFIG=${CONFIG:-/datadir/headphones.ini}
+if [ ! -f ${CONFIG} ]; then
+    cp /headphones/headphones.ini /datadir/
+fi
+
+#
 # Finally, start Headphones.
 #
 
-CONFIG=${CONFIG:-/datadir/config.ini}
 echo "Starting Headphones..."
 exec su -pc "./Headphones.py --datadir=$(dirname ${CONFIG}) --config=${CONFIG}" ${USER}
