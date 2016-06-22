@@ -13,7 +13,7 @@ RUN apt-get -q update \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/*
 
-WORKDIR ["/headphones"]
+WORKDIR "/headphones"
 VOLUME ["/datadir", "/download"]
 EXPOSE 8181
 

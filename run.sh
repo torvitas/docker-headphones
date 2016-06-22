@@ -42,4 +42,4 @@ echo "[DONE]"
 
 CONFIG=${CONFIG:-/datadir/config.ini}
 echo "Starting Headphones..."
-exec su -pc "./headphones/Headphones.py --data_dir=$(dirname ${CONFIG}) --config_file=${CONFIG}" ${USER}
+exec su -pc "./Headphones.py --data_dir=$(dirname ${CONFIG}) --config_file=${CONFIG}" ${USER}
