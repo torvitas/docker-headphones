@@ -1,23 +1,18 @@
-FROM debian:8
+FROM alpine:3.7
 MAINTAINER Sascha Marcel Schmidt <docker@saschaschmidt.net>
 
-RUN groupadd -r -g 666 headphones && \
-    useradd -r -u 666 -g 666 -d /headphones headphones
+RUN addgroup -g 666 -S headphones && \
+    adduser -u 666 -D -S -G headphones headphones
 
-RUN apt-get -q update \
-    && apt-get install -qy git python libav-tools shntool \
-    && git clone https://github.com/rembo10/headphones.git headphones \
-    && chown -R headphones: headphones \
-    && apt-get -y autoremove \
-    && apt-get -y clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /tmp/*
+RUN apk --no-cache add git python
+RUN git clone  --depth 1 https://github.com/rembo10/headphones.git /opt/headphones \
+    && chown -R headphones:headphones /opt/headphones
 
-WORKDIR "/headphones"
-VOLUME ["/datadir", "/download"]
+WORKDIR "/opt/headphones"
+VOLUME ["/var/headphones", "/var/download"]
 EXPOSE 8181
 
-COPY run.sh /
-COPY headphones.ini /headphones/
+USER headphones
 
-CMD ["/bin/bash", "/run.sh"]
+COPY headphones.ini /opt/headphones/
+CMD ["/opt/headphones/Headphones.py"]
